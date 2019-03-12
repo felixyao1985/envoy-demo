@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  local:
+
+services:
+  adverseevent:
+    build:
+      context: dist/
+    container_name: dc-ae
+    restart: always
+    networks:
+      - local
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  envoy:
+    image: envoyproxy/envoy-alpine:latest
+    restart: always
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+      - ./envoy/descriptor.pb:/data/descriptor.pb
+    container_name: envoy
+    restart: always
+    ports:
+      - 10000:10000
+    depends_on:
+      - adverseevent
+    networks:
+      - local
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1

@@ -1,0 +1,92 @@
+syntax = "proto3";
+package datacenter;
+
+import "google/api/annotations.proto";
+
+service AdverseEvent {
+    rpc Save (AdverseEventModel) returns (ResAdverseEvent) {
+        option(google.api.http) = {
+            post: "/izhaohu-adverse/api/adverse"
+        };
+    }
+    rpc Search (RepSearch) returns (ResSearch) {
+        option(google.api.http) = {
+            get: "/izhaohu-adverse/api/adverse"
+        };
+    }
+    rpc View (RepAdverseEventView) returns (ResAdverseEvent) {
+        option(google.api.http) = {
+            get: "/izhaohu-adverse/api/adverse/{ID}"
+        };
+    }
+}
+
+message RepSearch  {
+    string keyword = 1;
+}
+
+message ResSearch  {
+    int64 code = 1;
+    string msg = 2;
+    repeated AdverseEventSearchModel data_info = 3;
+}
+
+message RepAdverseEventView  {
+    int64 ID = 1;
+}
+
+message AdverseEventSearchModel {
+    int64 id = 1;
+    string integration = 2;
+}
+
+message AdverseEventModel  {
+    int64 id = 1;
+    string domain_type = 2;
+    int64 domain_id = 3;
+    string domain_name = 4;
+    string domain_addresss = 5;
+    string domain_createtime = 6;
+    string patient_sex = 7;
+    string patient_name = 8;
+    string patient_age = 9;
+    string patient_type = 10;
+    string patient_state = 11;
+    string event_place_type = 12;
+    string event_place = 13;
+    string event_time = 14;
+    string event_scene = 15;
+    string event_type = 16;
+    string event_memo = 17;
+    string symptom = 18;
+    string dispose = 19;
+    string dispose_worker_type = 20;
+    string dispose_worker_title = 21;
+    string dispose_worker_age = 22;
+    string dispose_worker_name = 23;
+    string dispose_worker_sex = 24;
+    string event_lv = 25;
+    string event_result = 26;
+    string event_reason = 27;
+    string event_reason_memo = 28;
+    string follow_upl = 29;
+    string qc_user_name = 30;
+    string qc_user_age = 31;
+    string qc_user_sex = 32;
+    string qc_user_type = 33;
+    string qc_user_title = 34;
+    string preventive = 35;
+    string preventive_manager = 36;
+    string accident_liability = 37;
+    string preventive_manage_post = 38;
+    string preventive_manage_age = 39;
+    string preventive_manage_sex = 40;
+    string preventive_manage_title = 41;
+    string patient_state_memo = 42;
+}
+
+message ResAdverseEvent {
+    int32 code = 1;
+    string msg = 2;
+    repeated AdverseEventModel data_info = 3;
+}
